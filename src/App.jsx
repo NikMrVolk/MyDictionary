@@ -9,14 +9,16 @@ function App() {
 	const [game, setGame] = useState('')
 	const [words, setWords] = useState([])
 
-	// useEffect(() => {
-	// 	if (!words.length) {
-	// 		setWords(JSON.parse(localStorage.getItem('words')))
-	// 	}
-	// }, [])
+	useEffect(() => {
+		if (!words.length) {
+			setWords(JSON.parse(localStorage.getItem('words')))
+		}
+	}, [])
 
 	return (
-		<GameContext.Provider value={{ userName, setUserName, game, setGame, words, setWords }}>
+		<GameContext.Provider
+			value={{ userName, setUserName, game, setGame, words, setWords }}
+		>
 			<BrowserRouter>
 				<div className="App">
 					<AppRouters />

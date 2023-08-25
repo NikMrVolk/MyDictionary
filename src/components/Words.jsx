@@ -15,11 +15,8 @@ const Words = () => {
 	}
 
 	useEffect(() => {
-		if(words.lenght)
-		localStorage.setItem('words', JSON.stringify(words))
-		
+		if (words.length) localStorage.setItem('words', JSON.stringify(words))
 	}, [words])
-	
 
 	return (
 		<>
@@ -41,8 +38,9 @@ const Words = () => {
 					<MyButton onClick={handleAddWord}>Add word</MyButton>
 				</form>
 				<br />
-				{data.map((word) => (
-						<Word key={word.en} en={word.en} ru={word.ru} />
+				{
+				words.map((word) => (
+					<Word key={word.en} en={word.enWord} ru={word.ruWord} />
 				))}
 			</div>
 		</>
