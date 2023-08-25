@@ -11,11 +11,18 @@ const Words = () => {
 
 	const handleAddWord = (e) => {
 		e.preventDefault()
+		console.log(words)
+		
 		setWords([...words, { enWord: text.enWord, ruWord: text.ruWord }])
 	}
 
+	const handleRemoveWords = () => {
+		localStorage.removeItem('words')
+		setWords([])
+	}
+
 	useEffect(() => {
-		if (words.length) localStorage.setItem('words', JSON.stringify(words))
+		if (!words) localStorage.setItem('words', JSON.stringify(words))
 	}, [words])
 
 	return (
@@ -36,12 +43,12 @@ const Words = () => {
 						onChange={(e) => setText({ ...text, ruWord: e.target.value })}
 					/>
 					<MyButton onClick={handleAddWord}>Add word</MyButton>
+					<MyButton onClick={handleRemoveWords}>Remove all words</MyButton>
 				</form>
 				<br />
-				{
-				words.map((word) => (
+				{words ? words.map((word) => (
 					<Word key={word.en} en={word.enWord} ru={word.ruWord} />
-				))}
+				)): <div style={{textAlign: 'center'}}>You haven't words in your dictionary</div>}
 			</div>
 		</>
 	)
