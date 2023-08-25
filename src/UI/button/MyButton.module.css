@@ -1,0 +1,9 @@
+.MyButton {
+  min-width: 100px;
+  height: 50px;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid darkcyan;
+  background: paleturquoise;
+  border-radius: 20px;
+}
