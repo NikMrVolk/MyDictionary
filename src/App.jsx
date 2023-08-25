@@ -10,7 +10,7 @@ function App() {
 	const [words, setWords] = useState([])
 
 	useEffect(() => {
-		if (!words.length) {
+		if (!words.length && localStorage.getItem('words')) {
 			setWords(JSON.parse(localStorage.getItem('words')))
 		}
 	}, [])
