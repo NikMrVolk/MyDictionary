@@ -42,10 +42,21 @@ a {
 	background: rgb(176, 253, 176);
 	padding: 5px;
 	border: 1px solid blueviolet;
+	border-radius: 10px;
+	display: flex;
+	align-items: center;
+}
+
+.word__content {
+	flex: 1 1 auto;
 	display: flex;
 	justify-content: space-around;
-	border-radius: 10px;
 	gap: 15px;
+}
+
+.word__delete:hover {
+	color: red;
+	transform: scale(1.1);
 }
 
 .add-form {

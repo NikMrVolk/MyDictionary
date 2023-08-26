@@ -10,7 +10,7 @@ const Words = () => {
 
 	const handleAddWord = (e) => {
 		e.preventDefault()
-		setWords([...words, { id: words.length + 1, enWord: text.enWord, ruWord: text.ruWord }])
+		setWords([...words, { id: Date.now(), enWord: text.enWord.trim(), ruWord: text.ruWord.trim() }])
 	}
 
 	const handleRemoveWords = (e) => {
@@ -45,7 +45,7 @@ const Words = () => {
 				</form>
 				<br />
 				{words.length ? words.map((word) => (
-					<Word key={word.id} en={word.enWord} ru={word.ruWord} />
+					<Word key={word.id} {...word} />
 				)): <div style={{textAlign: 'center'}}>You haven't words in your dictionary</div>}
 			</div>
 		</>

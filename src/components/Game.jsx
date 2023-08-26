@@ -10,7 +10,7 @@ const Game = () => {
 	const [wordToTranslate, setWordToTranslate] = useState('')
 	const [searchedWord, setSearchedWord] = useState('')
 	const [text, setText] = useState('')
-	const [random, setRandom] = useState(1)
+	const [random, setRandom] = useState(0)
 
 	const inputRef = useRef()
 	const navigate = useNavigate()
@@ -28,7 +28,7 @@ const Game = () => {
 
 	const examination = (e) => {
 		e.preventDefault()
-		if (text === searchedWord) {
+		if (text.trim() === searchedWord) {
 			console.log('good')
 			setRandom(Math.floor(Math.random() * words.length))
 			setText('')
