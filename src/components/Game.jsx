@@ -1,40 +1,51 @@
-import React, { useContext, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import MyInput from '../UI/input/MyInput'
 import MyButton from '../UI/button/MyButton'
-import { data } from '../data/data'
 import { GameContext } from '../context/context'
 import { useNavigate } from 'react-router-dom'
 
-
 const Game = () => {
-	const { userName, game } = useContext(GameContext)
-	const { words } = useContext(GameContext)
+	const { userName, game, words } = useContext(GameContext)
+
+	const [wordToTranslate, setWordToTranslate] = useState('')
+	const [searchedWord, setSearchedWord] = useState('')
 	const [text, setText] = useState('')
-	const [random, setRandom] = useState(0)
+	const [random, setRandom] = useState(1)
+
 	const inputRef = useRef()
 	const navigate = useNavigate()
 
+	useEffect(() => {
+		setRandom(Math.floor(Math.random() * words.length))
+		if (game === 'RU' && words.length) {
+			setSearchedWord(words[random].enWord)
+			setWordToTranslate(words[random].ruWord)
+		} else if (game === 'EN' && words.length) {
+			setSearchedWord(words[random].ruWord)
+			setWordToTranslate(words[random].enWord)
+		}
+	}, [random, game, words])
+
 	const examination = (e) => {
 		e.preventDefault()
-		let searchedWord
-		if (game === 'RU') {
-			searchedWord = data[random].en
-		} else if (game === 'EN') {
-			searchedWord = data[random].ru
-		}
 		if (text === searchedWord) {
 			console.log('good')
-			setRandom(Math.floor(Math.random() * data.length))
+			setRandom(Math.floor(Math.random() * words.length))
 			setText('')
 			inputRef.current.focus()
 		}
 	}
 
+	const getWordToTranslate = (langWord) => {
+		const wordToTranslate = words[random].langWord
+		return wordToTranslate
+	}
+
 	return (
 		<div className="wrapper">
-			<div className="title">Hello, {userName}, enter this word on english</div>
+			<div className="title">Hello, {userName}, translale this word</div>
 			<form onSubmit={examination}>
-				<MyInput value={data[random][game.toLowerCase()]} readOnly />
+				<MyInput value={wordToTranslate} readOnly />
 				<MyInput
 					ref={inputRef}
 					type="text"
@@ -46,7 +57,13 @@ const Game = () => {
 				/>
 				<MyButton>Submit</MyButton>
 			</form>
-			<MyButton onClick={() => { navigate('/words') }}>Change words</MyButton>
+			<MyButton
+				onClick={() => {
+					navigate('/words')
+				}}
+			>
+				Change words
+			</MyButton>
 		</div>
 	)
 }

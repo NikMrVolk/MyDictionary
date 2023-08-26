@@ -16,6 +16,9 @@ function App() {
 		if (!userName && localStorage.getItem('userName')) {
 			setUserName(localStorage.getItem('userName'))
 		}
+		if(!game && localStorage.getItem('game')) {
+			setGame(localStorage.getItem('game'))
+		}
 	}, [])
 
 	return (

@@ -12,6 +12,7 @@ const Start = () => {
 
 	const start = (name, mode) => {
 		localStorage.setItem('userName', name)
+		localStorage.setItem('game', mode)
 		setUserName(name)
 		setGame(mode)
 		navigate('/game')

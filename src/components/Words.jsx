@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
 import MyButton from '../UI/button/MyButton'
 import MyInput from '../UI/input/MyInput'
-import { data } from '../data/data'
 import Word from './Word'
 import { GameContext } from '../context/context'
 
