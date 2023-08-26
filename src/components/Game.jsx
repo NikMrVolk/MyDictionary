@@ -30,9 +30,6 @@ const Game = () => {
 		}
 	}
 
-
-
-
 	return (
 		<div className="wrapper">
 			<div className="title">Hello, {userName}, enter this word on english</div>

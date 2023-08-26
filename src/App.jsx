@@ -13,6 +13,9 @@ function App() {
 		if (!words.length && localStorage.getItem('words')) {
 			setWords(JSON.parse(localStorage.getItem('words')))
 		}
+		if (!userName && localStorage.getItem('userName')) {
+			setUserName(localStorage.getItem('userName'))
+		}
 	}, [])
 
 	return (

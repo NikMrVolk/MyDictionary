@@ -11,6 +11,7 @@ const Start = () => {
 	const { setUserName, setGame } = useContext(GameContext)
 
 	const start = (name, mode) => {
+		localStorage.setItem('userName', name)
 		setUserName(name)
 		setGame(mode)
 		navigate('/game')
