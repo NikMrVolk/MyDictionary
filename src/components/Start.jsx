@@ -1,12 +1,12 @@
 import { useContext, useState } from 'react'
-import MyInput from '../UI/input/MyInput'
-import MyButton from '../UI/button/MyButton'
+import MyInput from './UI/input/MyInput'
+import MyButton from './UI/button/MyButton'
 import { useNavigate } from 'react-router-dom'
 import { GameContext } from '../context/context'
 
 const Start = () => {
 	const navigate = useNavigate()
-	const [name, setName] = useState()
+	const [name, setName] = useState('')
 	const modes = ['RU', 'EN']
 	const { setUserName, setGame } = useContext(GameContext)
 

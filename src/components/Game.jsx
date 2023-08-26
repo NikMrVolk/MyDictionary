@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
-import MyInput from '../UI/input/MyInput'
-import MyButton from '../UI/button/MyButton'
+import React, { useContext, useEffect, useState } from 'react'
+import MyInput from './UI/input/MyInput'
+import MyButton from './UI/button/MyButton'
 import { GameContext } from '../context/context'
 import { useNavigate } from 'react-router-dom'
 
@@ -12,7 +12,6 @@ const Game = () => {
 	const [text, setText] = useState('')
 	const [random, setRandom] = useState(0)
 
-	const inputRef = useRef()
 	const navigate = useNavigate()
 
 	useEffect(() => {
@@ -32,7 +31,6 @@ const Game = () => {
 			console.log('good')
 			setRandom(Math.floor(Math.random() * words.length))
 			setText('')
-			inputRef.current.focus()
 		}
 	}
 
@@ -47,7 +45,6 @@ const Game = () => {
 			<form onSubmit={examination}>
 				<MyInput value={wordToTranslate} readOnly />
 				<MyInput
-					ref={inputRef}
 					type="text"
 					placeholder="Enter text"
 					value={text}
