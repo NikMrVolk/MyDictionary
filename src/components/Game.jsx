@@ -28,7 +28,6 @@ const Game = () => {
 	const examination = (e) => {
 		e.preventDefault()
 		if (text.trim() === searchedWord) {
-			console.log('good')
 			setRandom(Math.floor(Math.random() * words.length))
 			setText('')
 		}
