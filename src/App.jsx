@@ -10,8 +10,15 @@ function App() {
 	const [words, setWords] = useState([])
 
 	const handleRemoveWord = (id) => {
-		setWords(words.filter(word=> word.id !== id))
+		setWords(words.filter((word) => word.id !== id))
 		localStorage.setItem('words', JSON.stringify(words))
+	}
+
+	const handleChangeWord = (id, enWord, ruWord) => {
+		const index = words.findIndex(word => word.id === +id)
+		const newWord = {id: +id, enWord: enWord.trim(), ruWord: ruWord.trim()}
+		words.splice(index, 1, newWord)
+		setWords(words)
 	}
 
 	useEffect(() => {
@@ -21,14 +28,23 @@ function App() {
 		if (!userName && localStorage.getItem('userName')) {
 			setUserName(localStorage.getItem('userName'))
 		}
-		if(!game && localStorage.getItem('game')) {
+		if (!game && localStorage.getItem('game')) {
 			setGame(localStorage.getItem('game'))
 		}
 	}, [])
 
 	return (
 		<GameContext.Provider
-			value={{ userName, setUserName, game, setGame, words, setWords, handleRemoveWord }}
+			value={{
+				userName,
+				setUserName,
+				game,
+				setGame,
+				words,
+				setWords,
+				handleRemoveWord,
+				handleChangeWord,
+			}}
 		>
 			<BrowserRouter>
 				<div className="App">

@@ -45,20 +45,47 @@ a {
 	border-radius: 10px;
 	display: flex;
 	align-items: center;
+	gap: 10px;
 }
 
 .word__content {
 	flex: 1 1 auto;
 	display: flex;
 	justify-content: space-around;
-	gap: 15px;
+}
+
+.word__icon {
+	transform: scale(1.1);
+	transition-duration: 500ms;
+	cursor: pointer;
+}
+
+.word__info:hover {
+	color: rgb(255, 23, 185);
 }
 
 .word__delete:hover {
 	color: red;
-	transform: scale(1.1);
 }
 
 .add-form {
 	text-align: center;
+}
+
+.word-info__wrapper {
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.word-info__body {
+	max-width: 600px;
+	background: rgb(243 211 153 / 50%);
+	border: 2px solid cadetblue;
+	border-radius: 10px;
+	padding: 10px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
 }

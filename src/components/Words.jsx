@@ -19,6 +19,8 @@ const Words = () => {
 		setWords([])
 	}
 
+
+
 	useEffect(() => {
 		if (words.length) localStorage.setItem('words', JSON.stringify(words))
 	}, [words])
@@ -41,7 +43,7 @@ const Words = () => {
 						onChange={(e) => setText({ ...text, ruWord: e.target.value })}
 					/>
 					<MyButton onClick={handleAddWord}>Add word</MyButton>
-					<MyButton onClick={(e) => {handleRemoveWords(e)}}>Remove all words</MyButton>
+					<MyButton disabled onClick={(e) => {handleRemoveWords(e)}}>Remove all words</MyButton>
 				</form>
 				<br />
 				{words.length ? words.map((word) => (
