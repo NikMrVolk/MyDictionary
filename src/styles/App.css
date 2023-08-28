@@ -17,6 +17,10 @@ a {
 	align-items: center;
 }
 
+.start-game {
+	height: auto;
+}
+
 .game__modes {
 	margin-top: 10px;
 	display: flex;
@@ -74,7 +78,6 @@ a {
 }
 
 .word-info__wrapper {
-	height: 100vh;
 	display: flex;
 	justify-content: center;
 	align-items: center;

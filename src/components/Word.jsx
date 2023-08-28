@@ -1,12 +1,9 @@
 import React, { useContext } from 'react'
 import { FiXSquare } from 'react-icons/fi'
 import { LuFileSignature } from 'react-icons/lu'
-import { GameContext } from '../context/context'
 import { useNavigate } from 'react-router-dom'
 
-const Word = ({ id, enWord, ruWord }) => {
-	const { handleRemoveWord } = useContext(GameContext)
-	const navigate = useNavigate()
+const Word = ({ id, enWord, ruWord, setIdChangedWord, removeWord, setModalActive }) => {
 
 	return (
 		<div className="word__wrapper">
@@ -16,13 +13,14 @@ const Word = ({ id, enWord, ruWord }) => {
 			</div>
 			<LuFileSignature
 				onClick={() => {
-					navigate(`/words/${id}`)
+					setIdChangedWord(id)
+					setModalActive(true)
 				}}
 				className="word__icon word__info"
 			/>
 			<FiXSquare
 				onClick={() => {
-					handleRemoveWord(id)
+					removeWord(id)
 				}}
 				className="word__icon word__delete"
 			/>

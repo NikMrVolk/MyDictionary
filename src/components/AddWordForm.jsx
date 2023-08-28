@@ -1,23 +1,13 @@
-import { useContext, useState } from 'react'
-import { GameContext } from '../context/context'
+import { useState } from 'react'
 import MyButton from './UI/button/MyButton'
 import MyInput from './UI/input/MyInput'
 
-const AddWordForm = ({ setModalActive }) => {
-	const { words, setWords } = useContext(GameContext)
+const AddWordForm = ({ addWord }) => {
 	const [text, setText] = useState({ enWord: '', ruWord: '' })
-
-	const handleAddWord = (e) => {
-		e.preventDefault()
-		setWords([
-			...words,
-			{
-				id: Date.now(),
-				enWord: text.enWord.trim(),
-				ruWord: text.ruWord.trim(),
-			},
-		])
-		setModalActive(false)
+	const newWord = {
+		id: Date.now(),
+		enWord: text.enWord.trim(),
+		ruWord: text.ruWord.trim(),
 	}
 
 	return (
@@ -34,7 +24,14 @@ const AddWordForm = ({ setModalActive }) => {
 				value={text.ruWord}
 				onChange={(e) => setText({ ...text, ruWord: e.target.value })}
 			/>
-			<MyButton onClick={handleAddWord}>Add word</MyButton>
+			<MyButton
+				onClick={(e) => {
+					e.preventDefault()
+					addWord(newWord)
+				}}
+			>
+				Add word
+			</MyButton>
 		</form>
 	)
 }

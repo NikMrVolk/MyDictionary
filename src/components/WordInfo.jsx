@@ -1,21 +1,16 @@
-import { useNavigate, useParams } from 'react-router-dom'
 import MyButton from './UI/button/MyButton'
 import MyInput from './UI/input/MyInput'
-import { GameContext } from '../context/context'
-import { useContext, useEffect, useState } from 'react'
+import {useEffect, useState } from 'react'
 
-const WordInfo = ({}) => {
-	const navigate = useNavigate()
-	const { wordInfo } = useParams()
-	const { words, handleChangeWord} = useContext(GameContext)
+const WordInfo = ({words, id, changeWord}) => {
 	const [text, setText] = useState({ en: '', ru: '' })
 
 	useEffect(() => {
-		if (words.length) {
-			const [myWord] = words.filter((word) => word.id === +wordInfo)
+		if (words.length && id) {
+			const [myWord] = words.filter((word) => word.id === id)
 			setText({ en: myWord.enWord, ru: myWord.ruWord })
 		}
-	}, [])
+	}, [id])
 
 	return (
 		<div className="word-info__wrapper">
@@ -36,9 +31,7 @@ const WordInfo = ({}) => {
 				/>
 				<MyButton
 					onClick={() => {
-						handleChangeWord(wordInfo, text.en, text.ru)
-						navigate('/words')
-						
+						changeWord(id, text.en, text.ru)
 					}}
 				>
 					Save

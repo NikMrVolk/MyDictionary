@@ -1,18 +1,16 @@
 import { Route, Routes } from 'react-router-dom'
 import Game from './Game'
-import Start from './Start'
-import Words from './Words'
-import WordInfo from './WordInfo'
-import Word from './Word'
+import Dictionary from '../pages/Dictionary'
+import About from '../pages/About'
 
 const AppRouters = () => {
+
 	return (
 		<Routes>
-			<Route path="/" element={<Start />} />
-			<Route path="/words" element={<Words />} />
-			<Route path="/word" element={<Word />} />
-			<Route path="/words/:wordInfo" element={<WordInfo />} />
-			<Route path="*" element={<Game />} />
+			<Route path="/dictionary" element={<Dictionary />} />
+			<Route path="/game" element={<Game />} />
+			<Route path="/about" element={<About />} />
+			<Route path="*" element={<Dictionary />} />
 		</Routes>
 	)
 }
