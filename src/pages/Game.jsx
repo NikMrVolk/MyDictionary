@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
-import MyInput from './UI/input/MyInput'
-import MyButton from './UI/button/MyButton'
+import MyInput from '../components/UI/input/MyInput'
+import MyButton from '../components/UI/button/MyButton'
 import { GameContext } from '../context/context'
 import { useNavigate } from 'react-router-dom'
-import MyModal from './UI/modal/MyModal'
-import StartGame from './StartGame'
+import MyModal from '../components/UI/modal/MyModal'
+import StartGame from '../components/StartGame'
+import GameForm from '../components/GameForm'
 
 const Game = () => {
 	const { words } = useContext(GameContext)
@@ -60,18 +61,12 @@ const Game = () => {
 		<>
 			<div className="wrapper">
 				<div className="title">Hello, {userName}, translale this word</div>
-				<form onSubmit={examination}>
-					<MyInput value={wordToTranslate} readOnly />
-					<MyInput
-						type="text"
-						placeholder="Enter text"
-						value={text}
-						onChange={(e) => {
-							setText(e.target.value)
-						}}
-					/>
-					<MyButton>Submit</MyButton>
-				</form>
+				<GameForm
+					text={text}
+					setText={setText}
+					examination={examination}
+					wordToTranslate={wordToTranslate}
+				/>
 				<MyButton
 					onClick={() => {
 						navigate('/')
@@ -80,7 +75,10 @@ const Game = () => {
 					Dictionary
 				</MyButton>
 			</div>
-			<MyModal active={startGameModalActive} setActive={setStartGameModalActive}>
+			<MyModal
+				active={startGameModalActive}
+				setActive={setStartGameModalActive}
+			>
 				<StartGame
 					name={userName}
 					setName={setUserName}
