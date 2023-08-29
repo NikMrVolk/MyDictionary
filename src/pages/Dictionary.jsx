@@ -55,6 +55,18 @@ const Dictionary = () => {
 		localStorage.setItem('words', JSON.stringify(words))
 	}
 
+	useEffect(() => {
+		if (words.length) localStorage.setItem('words', JSON.stringify(words))
+	}, [words])
+
+	useEffect(() => {
+		const data = localStorage.getItem('words', JSON.stringify(words))
+		if (data && data.length) {
+			setWords(JSON.parse(data))
+		}
+	}, [])
+	console.log(1)
+
 	return (
 		<>
 			<h1 className="title">Dictionary</h1>
