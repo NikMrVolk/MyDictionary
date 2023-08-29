@@ -1,18 +1,16 @@
 import { useContext, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import MyButton from '../components/UI/button/MyButton'
 import AddWordForm from '../components/AddWordForm'
 import MyModal from '../components/UI/modal/MyModal'
 import Word from '../components/Word'
 import { GameContext } from '../context/context'
 import WordInfo from '../components/WordInfo'
+import WordsManager from '../components/WordsManager'
 
 const Dictionary = () => {
 	const { words, setWords } = useContext(GameContext)
 	const [addWordModalActive, setAddWordModalActive] = useState(false)
 	const [changeWordModalActive, setChangeWordModalActive] = useState(false)
 	const [idChangedWord, setIdChangedWord] = useState(0)
-	const navigate = useNavigate()
 
 	const handleAddWord = (addedWord) => {
 		setWords([...words, addedWord])
@@ -52,37 +50,18 @@ const Dictionary = () => {
 		<>
 			<h1 className="title">Dictionary</h1>
 			<div className="dictionary">
-				<MyButton
-					onClick={() => {
-						setAddWordModalActive(true)
-					}}
-				>
-					Add word
-				</MyButton>
-				<MyButton
-					disabled
-					onClick={(e) => {
-						e.preventDefault()
-						handleRemoveWords()
-					}}
-				>
-					Remove all words
-				</MyButton>
-				<MyButton
-					onClick={() => {
-						navigate('/game')
-					}}
-				>
-					Game
-				</MyButton>
+				<WordsManager
+					setModalActive={setAddWordModalActive}
+					removeWords={handleRemoveWords}
+				/>
 				<br />
 				{words.length ? (
 					words.map((word) => (
 						<Word
 							key={word.id}
 							{...word}
-							setModalActive = {setChangeWordModalActive}
-							setIdChangedWord = { setIdChangedWord }
+							setModalActive={setChangeWordModalActive}
+							setIdChangedWord={setIdChangedWord}
 							removeWord={handleRemoveWord}
 						/>
 					))
@@ -102,7 +81,11 @@ const Dictionary = () => {
 				active={changeWordModalActive}
 				setActive={setChangeWordModalActive}
 			>
-				<WordInfo words={words} id={idChangedWord} changeWord={handleChangeWord} />
+				<WordInfo
+					words={words}
+					id={idChangedWord}
+					changeWord={handleChangeWord}
+				/>
 			</MyModal>
 		</>
 	)
