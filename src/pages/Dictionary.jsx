@@ -5,21 +5,39 @@ import Word from '../components/Word'
 import { GameContext } from '../context/context'
 import WordInfo from '../components/WordInfo'
 import WordsManager from '../components/WordsManager'
+import MySelect from '../components/UI/select/MySelect'
 
 const Dictionary = () => {
 	const { words, setWords } = useContext(GameContext)
 	const [addWordModalActive, setAddWordModalActive] = useState(false)
 	const [changeWordModalActive, setChangeWordModalActive] = useState(false)
 	const [idChangedWord, setIdChangedWord] = useState(0)
+	const [sort, setSort] = useState('')
+	const options = [
+		{ value: 'enWord', name: 'English' },
+		{ value: 'ruWord', name: 'Russian' },
+	]
+
+	const sortedWords = (words, sort) => {
+		if (sort) {
+			return [...words].sort((a, b) => a[sort].localeCompare(b[sort]))
+		}
+		return words
+	}
+
+	const myWords = sortedWords(words, sort)
+
 
 	const handleAddWord = (addedWord) => {
 		setWords([...words, addedWord])
 		setAddWordModalActive(false)
+		localStorage.setItem('words', JSON.stringify(words))
 	}
 
 	const handleRemoveWord = (id) => {
 		setWords(words.filter((word) => word.id !== id))
 		localStorage.setItem('words', JSON.stringify(words))
+		console.log(1)
 	}
 
 	const handleRemoveWords = () => {
@@ -34,6 +52,7 @@ const Dictionary = () => {
 		setWords(words)
 		setChangeWordModalActive(false)
 		setIdChangedWord(0)
+		localStorage.setItem('words', JSON.stringify(words))
 	}
 
 	useEffect(() => {
@@ -41,10 +60,6 @@ const Dictionary = () => {
 			setWords(JSON.parse(localStorage.getItem('words')))
 		}
 	}, [])
-
-	useEffect(() => {
-		if (words.length) localStorage.setItem('words', JSON.stringify(words))
-	}, [words])
 
 	return (
 		<>
@@ -55,8 +70,15 @@ const Dictionary = () => {
 					removeWords={handleRemoveWords}
 				/>
 				<br />
+				<MySelect
+					sort={sort}
+					setSort={setSort}
+					defaultValue={'Sorted by'}
+					options={options}
+				/>
+				<br />
 				{words.length ? (
-					words.map((word) => (
+					myWords.map((word) => (
 						<Word
 							key={word.id}
 							{...word}
