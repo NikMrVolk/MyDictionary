@@ -6,6 +6,7 @@ import { GameContext } from '../context/context'
 import WordInfo from '../components/WordInfo'
 import WordsManager from '../components/WordsManager'
 import MySelect from '../components/UI/select/MySelect'
+import Words from '../components/Words'
 
 const Dictionary = () => {
 	const { words, setWords } = useContext(GameContext)
@@ -26,7 +27,6 @@ const Dictionary = () => {
 	}
 
 	const myWords = sortedWords(words, sort)
-
 
 	const handleAddWord = (addedWord) => {
 		setWords([...words, addedWord])
@@ -55,12 +55,6 @@ const Dictionary = () => {
 		localStorage.setItem('words', JSON.stringify(words))
 	}
 
-	useEffect(() => {
-		if (!words.length && localStorage.getItem('words')) {
-			setWords(JSON.parse(localStorage.getItem('words')))
-		}
-	}, [])
-
 	return (
 		<>
 			<h1 className="title">Dictionary</h1>
@@ -77,21 +71,12 @@ const Dictionary = () => {
 					options={options}
 				/>
 				<br />
-				{words.length ? (
-					myWords.map((word) => (
-						<Word
-							key={word.id}
-							{...word}
-							setModalActive={setChangeWordModalActive}
-							setIdChangedWord={setIdChangedWord}
-							removeWord={handleRemoveWord}
-						/>
-					))
-				) : (
-					<div style={{ textAlign: 'center' }}>
-						You haven't words in your dictionary
-					</div>
-				)}
+				<Words
+					myWords={myWords}
+					setModalActive={setChangeWordModalActive}
+					setIdChangedWord={setIdChangedWord}
+					removeWord={handleRemoveWord}
+				/>
 			</div>
 			<MyModal active={addWordModalActive} setActive={setAddWordModalActive}>
 				<AddWordForm
