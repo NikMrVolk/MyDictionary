@@ -1,8 +1,8 @@
 import MyButton from './UI/button/MyButton'
 import MyInput from './UI/input/MyInput'
-import {useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
-const WordInfo = ({words, id, changeWord}) => {
+const WordInfo = ({ words, id, changeWord }) => {
 	const [text, setText] = useState({ en: '', ru: '' })
 
 	useEffect(() => {

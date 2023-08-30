@@ -28,6 +28,7 @@ const AddWordForm = ({ addWord }) => {
 				onClick={(e) => {
 					e.preventDefault()
 					addWord(newWord)
+					setText({ enWord: '', ruWord: '' })
 				}}
 			>
 				Add word

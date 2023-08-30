@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
 import AddWordForm from '../components/AddWordForm'
 import MyModal from '../components/UI/modal/MyModal'
-import Word from '../components/Word'
 import { GameContext } from '../context/context'
 import WordInfo from '../components/WordInfo'
 import WordsManager from '../components/WordsManager'
@@ -31,13 +30,10 @@ const Dictionary = () => {
 	const handleAddWord = (addedWord) => {
 		setWords([...words, addedWord])
 		setAddWordModalActive(false)
-		localStorage.setItem('words', JSON.stringify(words))
 	}
 
 	const handleRemoveWord = (id) => {
-		setWords(words.filter((word) => word.id !== id))
-		localStorage.setItem('words', JSON.stringify(words))
-		console.log(1)
+		setWords(myWords.filter((word) => word.id !== id))
 	}
 
 	const handleRemoveWords = () => {
@@ -46,26 +42,27 @@ const Dictionary = () => {
 	}
 
 	const handleChangeWord = (id, enWord, ruWord) => {
-		const index = words.findIndex((word) => word.id === +id)
+		const index = myWords.findIndex((word) => word.id === +id)
 		const newWord = { id: +id, enWord: enWord.trim(), ruWord: ruWord.trim() }
-		words.splice(index, 1, newWord)
-		setWords(words)
+		myWords.splice(index, 1, newWord)
+		setWords(myWords)
 		setChangeWordModalActive(false)
 		setIdChangedWord(0)
-		localStorage.setItem('words', JSON.stringify(words))
+		if (myWords.length) localStorage.setItem('words', JSON.stringify(myWords))
 	}
 
 	useEffect(() => {
-		if (words.length) localStorage.setItem('words', JSON.stringify(words))
-	}, [words])
+		if (words.length) {
+			localStorage.setItem('words', JSON.stringify(myWords))
+		} 
+	}, [myWords])
 
 	useEffect(() => {
-		const data = localStorage.getItem('words', JSON.stringify(words))
+		const data = localStorage.getItem('words')
 		if (data && data.length) {
 			setWords(JSON.parse(data))
 		}
 	}, [])
-	console.log(1)
 
 	return (
 		<>

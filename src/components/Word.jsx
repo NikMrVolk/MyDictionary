@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import { FiXSquare } from 'react-icons/fi'
 import { LuFileSignature } from 'react-icons/lu'
-import { useNavigate } from 'react-router-dom'
 
 const Word = ({ id, enWord, ruWord, setIdChangedWord, removeWord, setModalActive }) => {
 
