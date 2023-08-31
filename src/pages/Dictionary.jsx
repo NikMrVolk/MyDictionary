@@ -21,8 +21,17 @@ const Dictionary = () => {
 
 	const [fetchWords, isLoading, wordsError] = useFetching(async () => {
 		const response = await WordsServise.getAll()
-		setWords([...words, ...response.data.comments])
+		setWords([...response.data.comments])
 	})
+
+	const [text, setText] = useState({ en: '', ru: '' })
+	const [fetchAddWord, isAddWordLoading, addedWordError] = useFetching(
+		async () => {
+			const addWord = await WordsServise.addWord(text.en, text.ru)
+			const response = await WordsServise.getAll()
+			setWords([...response.data.comments])
+		}
+	)
 
 	const sortedWords = (words, sort) => {
 		if (sort) {
@@ -33,9 +42,10 @@ const Dictionary = () => {
 
 	const myWords = sortedWords(words, sort)
 
-	const handleAddWord = (addedWord) => {
-		setWords([...words, addedWord])
+	const handleAddWord = () => {
+		fetchAddWord()
 		setAddWordModalActive(false)
+		fetchWords()
 	}
 
 	const handleRemoveWord = (id) => {
@@ -57,9 +67,7 @@ const Dictionary = () => {
 		if (myWords.length) localStorage.setItem('words', JSON.stringify(myWords))
 	}
 
-	useEffect(() => {
-
-	}, [myWords])
+	useEffect(() => {}, [myWords])
 
 	useEffect(() => {
 		fetchWords()
@@ -90,6 +98,8 @@ const Dictionary = () => {
 			</div>
 			<MyModal active={addWordModalActive} setActive={setAddWordModalActive}>
 				<AddWordForm
+					text={text}
+					setText={setText}
 					addWord={handleAddWord}
 					setAddWordModalActive={setAddWordModalActive}
 				/>

@@ -6,7 +6,7 @@ const Word = ({ id, author, text, setIdChangedWord, removeWord, setModalActive }
 	return (
 		<div className="word__wrapper">
 			<div className="word__content">
-				<div>{author.name}</div>2
+				<div>{author.name}</div>
 				<div>{text}</div>
 			</div>
 			<LuFileSignature
