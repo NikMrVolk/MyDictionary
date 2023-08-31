@@ -6,6 +6,8 @@ import WordInfo from '../components/WordInfo'
 import WordsManager from '../components/WordsManager'
 import MySelect from '../components/UI/select/MySelect'
 import Words from '../components/Words'
+import { useFetching } from '../hooks/useFetching'
+import WordsServise from '../API/WordsServise'
 
 const Dictionary = () => {
 	const { words, setWords } = useContext(GameContext)
@@ -17,6 +19,11 @@ const Dictionary = () => {
 		{ value: 'enWord', name: 'English' },
 		{ value: 'ruWord', name: 'Russian' },
 	]
+
+	const [fetchWords, isLoading, wordsError] = useFetching(async () => {
+		const response = await WordsServise.getAll()
+		console.log(response.data)
+	})
 
 	const sortedWords = (words, sort) => {
 		if (sort) {
@@ -62,6 +69,7 @@ const Dictionary = () => {
 		if (data && data.length) {
 			setWords(JSON.parse(data))
 		}
+		fetchWords()
 	}, [])
 
 	return (
