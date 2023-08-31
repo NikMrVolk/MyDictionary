@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
 import AddWordForm from '../components/AddWordForm'
 import MyModal from '../components/UI/modal/MyModal'
-import { GameContext } from '../context/context'
 import WordInfo from '../components/WordInfo'
 import WordsManager from '../components/WordsManager'
 import MySelect from '../components/UI/select/MySelect'
@@ -10,7 +9,7 @@ import { useFetching } from '../hooks/useFetching'
 import WordsServise from '../API/WordsServise'
 
 const Dictionary = () => {
-	const { words, setWords } = useContext(GameContext)
+	const [words, setWords] = useState([])
 	const [addWordModalActive, setAddWordModalActive] = useState(false)
 	const [changeWordModalActive, setChangeWordModalActive] = useState(false)
 	const [idChangedWord, setIdChangedWord] = useState(0)
@@ -22,7 +21,7 @@ const Dictionary = () => {
 
 	const [fetchWords, isLoading, wordsError] = useFetching(async () => {
 		const response = await WordsServise.getAll()
-		console.log(response.data)
+		setWords([...words, ...response.data.comments])
 	})
 
 	const sortedWords = (words, sort) => {
@@ -59,16 +58,10 @@ const Dictionary = () => {
 	}
 
 	useEffect(() => {
-		if (words.length) {
-			localStorage.setItem('words', JSON.stringify(myWords))
-		} 
+
 	}, [myWords])
 
 	useEffect(() => {
-		const data = localStorage.getItem('words')
-		if (data && data.length) {
-			setWords(JSON.parse(data))
-		}
 		fetchWords()
 	}, [])
 

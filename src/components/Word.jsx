@@ -1,14 +1,13 @@
-import React, { useContext } from 'react'
 import { FiXSquare } from 'react-icons/fi'
 import { LuFileSignature } from 'react-icons/lu'
 
-const Word = ({ id, enWord, ruWord, setIdChangedWord, removeWord, setModalActive }) => {
+const Word = ({ id, author, text, setIdChangedWord, removeWord, setModalActive }) => {
 
 	return (
 		<div className="word__wrapper">
 			<div className="word__content">
-				<div>{enWord}</div>
-				<div>{ruWord}</div>
+				<div>{author.name}</div>2
+				<div>{text}</div>
 			</div>
 			<LuFileSignature
 				onClick={() => {
