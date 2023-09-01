@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const address = 'https://wedev-api.sky.pro/api/v1/nick1/comments'
+const address = 'https://wedev-api.sky.pro/api/v1/nick/comments'
 
 export default class WordsServise {
 	static async getAll() {

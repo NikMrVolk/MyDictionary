@@ -1,24 +1,36 @@
-import Word from "./Word"
+import Word from './Word'
 
-const Words = ({ myWords, setModalActive, setIdChangedWord, removeWord }) => {
+const Words = ({
+	myWords,
+	setModalActive,
+	setIdChangedWord,
+	removeWord,
+	isWordsLoading,
+}) => {
 	return (
-		<>
-			{myWords.length ? (
-				myWords.map((word) => (
-					<Word
-						key={word.id}
-						{...word}
-						setModalActive={setModalActive}
-						setIdChangedWord={setIdChangedWord}
-						removeWord={removeWord}
-					/>
-				))
+		<div>
+			{isWordsLoading ? (
+				<div>Words are loading...</div>
 			) : (
-				<div style={{ textAlign: 'center' }}>
-					You haven't words in your dictionary
-				</div>
+				<>
+					{myWords.length ? (
+						myWords.map((word) => (
+							<Word
+								key={word.id}
+								{...word}
+								setModalActive={setModalActive}
+								setIdChangedWord={setIdChangedWord}
+								removeWord={removeWord}
+							/>
+						))
+					) : (
+						<div style={{ textAlign: 'center' }}>
+							You haven't words in your dictionary
+						</div>
+					)}
+				</>
 			)}
-		</>
+		</div>
 	)
 }
 

@@ -23,6 +23,7 @@ const WordsManager = ({setModalActive, removeWords}) => {
 				Remove all words
 			</MyButton>
 			<MyButton
+			disabled
 				onClick={() => {
 					navigate('/game')
 				}}

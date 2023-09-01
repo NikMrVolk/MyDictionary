@@ -19,15 +19,15 @@ const Dictionary = () => {
 		{ value: 'ruWord', name: 'Russian' },
 	]
 
-	const [fetchWords, isLoading, wordsError] = useFetching(async () => {
+	const [fetchWords, isWordsLoading, wordsError] = useFetching(async () => {
 		const response = await WordsServise.getAll()
 		setWords([...response.data.comments])
 	})
 
 	const [text, setText] = useState({ en: '', ru: '' })
-	const [fetchAddWord, isAddWordLoading, addedWordError] = useFetching(
+	const [fetchAddWord] = useFetching(
 		async () => {
-			const addWord = await WordsServise.addWord(text.en, text.ru)
+			await WordsServise.addWord(text.en, text.ru)
 			const response = await WordsServise.getAll()
 			setWords([...response.data.comments])
 		}
@@ -91,6 +91,7 @@ const Dictionary = () => {
 				<br />
 				<Words
 					myWords={myWords}
+					isWordsLoading={isWordsLoading}
 					setModalActive={setChangeWordModalActive}
 					setIdChangedWord={setIdChangedWord}
 					removeWord={handleRemoveWord}
