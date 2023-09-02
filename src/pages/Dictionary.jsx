@@ -50,12 +50,11 @@ const Dictionary = () => {
 
 	const handleChangeWord = (id, enWord, ruWord) => {
 		const index = myWords.findIndex((word) => word.id === +id)
-		const newWord = { id: +id, enWord: enWord.trim(), ruWord: ruWord.trim() }
+		const newWord = { id: +id, title: enWord, body: ruWord }
 		myWords.splice(index, 1, newWord)
 		setWords(myWords)
 		setChangeWordModalActive(false)
 		setIdChangedWord(0)
-		if (myWords.length) localStorage.setItem('words', JSON.stringify(myWords))
 	}
 
 	useEffect(() => {}, [myWords])

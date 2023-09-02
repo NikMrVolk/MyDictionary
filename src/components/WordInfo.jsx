@@ -8,7 +8,7 @@ const WordInfo = ({ words, id, changeWord }) => {
 	useEffect(() => {
 		if (words.length && id) {
 			const [myWord] = words.filter((word) => word.id === id)
-			setText({ en: myWord.enWord, ru: myWord.ruWord })
+			setText({ en: myWord.title.split(' ')[0], ru: myWord.body.split(' ')[0] })
 		}
 	}, [id])
 
