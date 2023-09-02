@@ -8,7 +8,8 @@ import { useFetching } from '../hooks/useFetching'
 import WordsServise from '../API/WordsServise'
 import { useWords } from '../hooks/useWords'
 import SearchWords from '../components/SearchWords'
-import { getArrWithFirstWords } from '../utils/utils'
+import { getArrWithFirstWords, getCountPage } from '../utils/utils'
+import { usePages } from '../hooks/usePages'
 
 const Dictionary = () => {
 	const [words, setWords] = useState([])
@@ -17,13 +18,18 @@ const Dictionary = () => {
 	const [idChangedWord, setIdChangedWord] = useState(0)
 	const [text, setText] = useState({ en: '', ru: '' })
 	const [search, setSearch] = useState({ sort: '', query: '' })
+	const [totalPages, setTotalPages] = useState('')
+	const [limit, setLimit] = useState('10')
+	const [page, setPage] = useState('1')
+	const myWords = useWords(words, search.sort, search.query)
+	const pagesQty = usePages(totalPages)
 
 	const [fetchWords, isWordsLoading, wordsError] = useFetching(async () => {
-		const response = await WordsServise.getAll()
+		const response = await WordsServise.getAll(limit, page)
 		setWords(getArrWithFirstWords([...response.data]))
+		const totalCount = response.headers['x-total-count']
+		setTotalPages(getCountPage(totalCount, limit))
 	})
-
-	const myWords = useWords(words, search.sort, search.query)
 
 	const handleAddWord = (newWord) => {
 		setAddWordModalActive(false)
@@ -49,7 +55,7 @@ const Dictionary = () => {
 
 	useEffect(() => {
 		fetchWords()
-	}, [])
+	}, [page])
 
 	return (
 		<>
@@ -60,7 +66,7 @@ const Dictionary = () => {
 					removeWords={handleRemoveWords}
 				/>
 				<br />
-				<SearchWords search={search} setSearch={setSearch}/>
+				<SearchWords search={search} setSearch={setSearch} />
 				<br />
 				<Words
 					myWords={myWords}
@@ -68,6 +74,10 @@ const Dictionary = () => {
 					setModalActive={setChangeWordModalActive}
 					setIdChangedWord={setIdChangedWord}
 					removeWord={handleRemoveWord}
+					error={wordsError}
+					pagesQty={pagesQty}
+					page={page}
+					setPage={setPage}
 				/>
 			</div>
 			<MyModal active={addWordModalActive} setActive={setAddWordModalActive}>

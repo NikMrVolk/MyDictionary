@@ -1,0 +1,18 @@
+.wrapper {
+	margin: 20px auto;
+	display: flex;
+	justify-content: center;
+	gap: 15px;
+}
+
+.item {
+	color: darkblue;
+	border: 1px solid darkblue;
+	padding: 5px;
+	cursor: pointer;
+}
+
+.item.active {
+	color: red;
+	border: 2px solid red;
+}
