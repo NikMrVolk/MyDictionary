@@ -6,7 +6,6 @@ export const usePages = (totalPages) => {
 		for (let i = 0; i < totalPages; i++) {
 			arrQty.push(i + 1)
 		}
-		console.log(arrQty)
 		return arrQty
 	}, [totalPages])
 	return getPagesQty

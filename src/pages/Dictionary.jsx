@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import AddWordForm from '../components/AddWordForm'
 import MyModal from '../components/UI/modal/MyModal'
 import WordInfo from '../components/WordInfo'
@@ -11,6 +11,7 @@ import SearchWords from '../components/SearchWords'
 import { getArrWithFirstWords, getCountPage } from '../utils/utils'
 import { usePages } from '../hooks/usePages'
 import MySelect from '../components/UI/select/MySelect'
+import { useObserver } from '../hooks/useObserver'
 
 const Dictionary = () => {
 	const [words, setWords] = useState([])
@@ -24,13 +25,21 @@ const Dictionary = () => {
 	const [page, setPage] = useState(1)
 	const myWords = useWords(words, search.sort, search.query)
 	const pagesQty = usePages(totalPages)
+	const lastElement = useRef()
 
 	const [fetchWords, isWordsLoading, wordsError] = useFetching(async () => {
 		const response = await WordsServise.getAll(limit, page)
-		setWords(getArrWithFirstWords([...response.data]))
+		setWords(getArrWithFirstWords([...words, ...response.data]))
 		const totalCount = response.headers['x-total-count']
 		setTotalPages(getCountPage(totalCount, limit))
 	})
+
+	useObserver(
+		lastElement,
+		page < totalPages,
+		isWordsLoading,
+		()=>{setPage(page + 1)}
+	)
 
 	const handleAddWord = (newWord) => {
 		setAddWordModalActive(false)
@@ -91,6 +100,10 @@ const Dictionary = () => {
 					setPage={setPage}
 				/>
 			</div>
+			<div
+				ref={lastElement}
+				style={{ height: '20px', background: 'red' }}
+			></div>
 			<MyModal active={addWordModalActive} setActive={setAddWordModalActive}>
 				<AddWordForm
 					text={text}
