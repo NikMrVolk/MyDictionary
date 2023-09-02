@@ -7,27 +7,17 @@ export const useSortedWords = (words, sort) => {
 		}
 		return words
 	}, [words, sort])
-   return sortedWords
+	return sortedWords
 }
 
-// export const useSortedPosts = (posts, sort) => {
-// 	const sortedPosts = useMemo(() => {
-// 		if (sort) {
-// 			return [...posts].sort((a, b) => a[sort].localeCompare(b[sort]))
-// 		}
-// 		return posts
-// 	}, [sort, posts])
-// 	return sortedPosts
-// }
-
-// export const usePosts = (posts, sort, query) => {
-// 	const sortedPosts = useSortedPosts(posts, sort)
-// 	const sortedAndSearchedPosts = useMemo(() => {
-// 		return sortedPosts.filter(
-// 			(post) =>
-// 				post.title.toLowerCase().includes(query.toLowerCase()) ||
-// 				post.body.toLowerCase().includes(query.toLowerCase())
-// 		)
-// 	}, [query, sortedPosts])
-// 	return sortedAndSearchedPosts
-// }
+export const useWords = (words, sort, query) => {
+	const sortedWords = useSortedWords(words, sort)
+	const sortedAndSearchedWords = useMemo(() => {
+		return sortedWords.filter(
+			(word) =>
+				word.title.toLowerCase().includes(query.toLowerCase()) ||
+				word.body.toLowerCase().includes(query.toLowerCase())
+		)
+	}, [sortedWords, query])
+	return sortedAndSearchedWords
+}

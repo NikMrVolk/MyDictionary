@@ -3,12 +3,12 @@ import AddWordForm from '../components/AddWordForm'
 import MyModal from '../components/UI/modal/MyModal'
 import WordInfo from '../components/WordInfo'
 import WordsManager from '../components/WordsManager'
-import MySelect from '../components/UI/select/MySelect'
 import Words from '../components/Words'
 import { useFetching } from '../hooks/useFetching'
 import WordsServise from '../API/WordsServise'
-import MyInput from '../components/UI/input/MyInput'
-import { useSortedWords } from '../hooks/useWords'
+import { useWords } from '../hooks/useWords'
+import SearchWords from '../components/SearchWords'
+import { getArrWithFirstWords } from '../utils/utils'
 
 const Dictionary = () => {
 	const [words, setWords] = useState([])
@@ -16,19 +16,14 @@ const Dictionary = () => {
 	const [changeWordModalActive, setChangeWordModalActive] = useState(false)
 	const [idChangedWord, setIdChangedWord] = useState(0)
 	const [text, setText] = useState({ en: '', ru: '' })
-	const [sort, setSort] = useState('')
-	const options = [
-		{ value: 'title', name: 'English' },
-		{ value: 'body', name: 'Russian' },
-	]
-	const [query, setQuery] = useState('')
+	const [search, setSearch] = useState({ sort: '', query: '' })
 
 	const [fetchWords, isWordsLoading, wordsError] = useFetching(async () => {
 		const response = await WordsServise.getAll()
-		setWords([...response.data])
+		setWords(getArrWithFirstWords([...response.data]))
 	})
 
-	const myWords = useSortedWords(words, sort)
+	const myWords = useWords(words, search.sort, search.query)
 
 	const handleAddWord = (newWord) => {
 		setAddWordModalActive(false)
@@ -52,8 +47,6 @@ const Dictionary = () => {
 		setIdChangedWord(0)
 	}
 
-	useEffect(() => {}, [myWords])
-
 	useEffect(() => {
 		fetchWords()
 	}, [])
@@ -67,18 +60,7 @@ const Dictionary = () => {
 					removeWords={handleRemoveWords}
 				/>
 				<br />
-				<MySelect
-					sort={sort}
-					setSort={setSort}
-					defaultValue={'Sorted by'}
-					options={options}
-				/>
-				<MyInput
-					type="text"
-					placeholder="Search"
-					value={query}
-					onChange={(e) => setQuery(e.target.value)}
-				/>
+				<SearchWords search={search} setSearch={setSearch}/>
 				<br />
 				<Words
 					myWords={myWords}

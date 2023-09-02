@@ -12,8 +12,8 @@ const Word = ({
 	return (
 		<div className="word">
 			<div className="word__content">
-				<div>{title.split(' ')[0]}</div>
-				<div>{body.split(' ')[0]}</div>
+				<div>{title}</div>
+				<div>{body}</div>
 			</div>
 			<LuFileSignature
 				onClick={() => {
