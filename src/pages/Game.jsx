@@ -8,7 +8,7 @@ import StartGame from '../components/StartGame'
 import GameForm from '../components/GameForm'
 
 const Game = () => {
-	const { words } = useContext(GameContext)
+	let words
 
 	const modes = ['RU', 'EN']
 	const [userName, setUserName] = useState('')

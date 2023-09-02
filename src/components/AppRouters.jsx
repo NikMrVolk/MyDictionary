@@ -1,15 +1,30 @@
 import { Route, Routes } from 'react-router-dom'
-import Game from '../pages/Game'
-import Dictionary from '../pages/Dictionary'
-import About from '../pages/About'
+import { useContext } from 'react'
+import { AuthContext } from '../context/context'
+import { privateRoutes, publicRoutes } from '../routes/routes'
 
 const AppRouters = () => {
+	const { auth } = useContext(AuthContext)
 
 	return (
 		<Routes>
-			<Route path="/dictionary" element={<Dictionary />} />
-			<Route path="/about" element={<About />} />
-			<Route path="*" element={<Dictionary />} />
+			{auth
+				? privateRoutes.map((rout) => (
+						<Route
+							key={rout.path}
+							path={rout.path}
+							element={rout.component}
+							exact={rout.exact}
+						/>
+				  ))
+				: publicRoutes.map((rout) => (
+						<Route
+							key={rout.path}
+							path={rout.path}
+							element={rout.component}
+							exact={rout.exact}
+						/>
+				  ))}
 		</Routes>
 	)
 }

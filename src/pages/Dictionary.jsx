@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import AddWordForm from '../components/AddWordForm'
 import MyModal from '../components/UI/modal/MyModal'
 import WordInfo from '../components/WordInfo'
@@ -12,6 +12,8 @@ import { getArrWithFirstWords, getCountPage } from '../utils/utils'
 import { usePages } from '../hooks/usePages'
 import MySelect from '../components/UI/select/MySelect'
 import { useObserver } from '../hooks/useObserver'
+import MyButton from '../components/UI/button/MyButton'
+import { AuthContext } from '../context/context'
 
 const Dictionary = () => {
 	const [words, setWords] = useState([])
@@ -26,6 +28,7 @@ const Dictionary = () => {
 	const myWords = useWords(words, search.sort, search.query)
 	const pagesQty = usePages(totalPages)
 	const lastElement = useRef()
+	const { setAuth } = useContext(AuthContext)
 
 	const [fetchWords, isWordsLoading, wordsError] = useFetching(async () => {
 		const response = await WordsServise.getAll(limit, page)
@@ -34,12 +37,9 @@ const Dictionary = () => {
 		setTotalPages(getCountPage(totalCount, limit))
 	})
 
-	useObserver(
-		lastElement,
-		page < totalPages,
-		isWordsLoading,
-		()=>{setPage(page + 1)}
-	)
+	useObserver(lastElement, page < totalPages, isWordsLoading, () => {
+		setPage(page + 1)
+	})
 
 	const handleAddWord = (newWord) => {
 		setAddWordModalActive(false)
@@ -88,6 +88,14 @@ const Dictionary = () => {
 						{ value: -1, name: 'all' },
 					]}
 				/>
+				<MyButton
+					onClick={() => {
+						setAuth(false)
+						localStorage.removeItem('auth')
+					}}
+				>
+					Log out
+				</MyButton>
 				<Words
 					myWords={myWords}
 					isWordsLoading={isWordsLoading}
@@ -100,10 +108,7 @@ const Dictionary = () => {
 					setPage={setPage}
 				/>
 			</div>
-			<div
-				ref={lastElement}
-				style={{ height: '20px', background: 'red' }}
-			></div>
+			<div ref={lastElement}></div>
 			<MyModal active={addWordModalActive} setActive={setAddWordModalActive}>
 				<AddWordForm
 					text={text}
