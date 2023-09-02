@@ -7,33 +7,28 @@ import MySelect from '../components/UI/select/MySelect'
 import Words from '../components/Words'
 import { useFetching } from '../hooks/useFetching'
 import WordsServise from '../API/WordsServise'
+import MyInput from '../components/UI/input/MyInput'
+import { useSortedWords } from '../hooks/useWords'
 
 const Dictionary = () => {
 	const [words, setWords] = useState([])
 	const [addWordModalActive, setAddWordModalActive] = useState(false)
 	const [changeWordModalActive, setChangeWordModalActive] = useState(false)
 	const [idChangedWord, setIdChangedWord] = useState(0)
+	const [text, setText] = useState({ en: '', ru: '' })
 	const [sort, setSort] = useState('')
 	const options = [
-		{ value: 'enWord', name: 'English' },
-		{ value: 'ruWord', name: 'Russian' },
+		{ value: 'title', name: 'English' },
+		{ value: 'body', name: 'Russian' },
 	]
+	const [query, setQuery] = useState('')
 
 	const [fetchWords, isWordsLoading, wordsError] = useFetching(async () => {
 		const response = await WordsServise.getAll()
 		setWords([...response.data])
 	})
 
-	const [text, setText] = useState({ en: '', ru: '' })
-
-	const sortedWords = (words, sort) => {
-		if (sort) {
-			return [...words].sort((a, b) => a[sort].localeCompare(b[sort]))
-		}
-		return words
-	}
-
-	const myWords = sortedWords(words, sort)
+	const myWords = useSortedWords(words, sort)
 
 	const handleAddWord = (newWord) => {
 		setAddWordModalActive(false)
@@ -77,6 +72,12 @@ const Dictionary = () => {
 					setSort={setSort}
 					defaultValue={'Sorted by'}
 					options={options}
+				/>
+				<MyInput
+					type="text"
+					placeholder="Search"
+					value={query}
+					onChange={(e) => setQuery(e.target.value)}
 				/>
 				<br />
 				<Words
