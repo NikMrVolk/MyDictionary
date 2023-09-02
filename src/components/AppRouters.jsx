@@ -8,7 +8,6 @@ const AppRouters = () => {
 	return (
 		<Routes>
 			<Route path="/dictionary" element={<Dictionary />} />
-			<Route path="/game" element={<Game />} />
 			<Route path="/about" element={<About />} />
 			<Route path="*" element={<Dictionary />} />
 		</Routes>

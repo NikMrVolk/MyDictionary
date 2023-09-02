@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import AddWordForm from '../components/AddWordForm'
 import MyModal from '../components/UI/modal/MyModal'
 import WordInfo from '../components/WordInfo'
@@ -21,18 +21,11 @@ const Dictionary = () => {
 
 	const [fetchWords, isWordsLoading, wordsError] = useFetching(async () => {
 		const response = await WordsServise.getAll()
-		setWords([...response.data.comments])
+		setWords([...response.data])
 	})
 
 	const [text, setText] = useState({ en: '', ru: '' })
-	const [fetchAddWord] = useFetching(
-		async () => {
-			await WordsServise.addWord(text.en, text.ru)
-			const response = await WordsServise.getAll()
-			setWords([...response.data.comments])
-		}
-	)
-
+	
 	const sortedWords = (words, sort) => {
 		if (sort) {
 			return [...words].sort((a, b) => a[sort].localeCompare(b[sort]))
@@ -43,7 +36,6 @@ const Dictionary = () => {
 	const myWords = sortedWords(words, sort)
 
 	const handleAddWord = () => {
-		fetchAddWord()
 		setAddWordModalActive(false)
 		fetchWords()
 	}
