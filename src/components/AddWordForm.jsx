@@ -2,7 +2,11 @@ import MyButton from './UI/button/MyButton'
 import MyInput from './UI/input/MyInput'
 
 const AddWordForm = ({ text, setText, addWord }) => {
-
+	const newWord = {
+		id: Date.now(),
+		title: text.en,
+		body: text.ru,
+	}
 
 	return (
 		<form className="add-form">
@@ -21,7 +25,7 @@ const AddWordForm = ({ text, setText, addWord }) => {
 			<MyButton
 				onClick={(e) => {
 					e.preventDefault()
-					addWord()
+					addWord(newWord)
 					setText({ en: '', ru: '' })
 				}}
 			>

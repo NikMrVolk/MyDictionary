@@ -25,7 +25,7 @@ const Dictionary = () => {
 	})
 
 	const [text, setText] = useState({ en: '', ru: '' })
-	
+
 	const sortedWords = (words, sort) => {
 		if (sort) {
 			return [...words].sort((a, b) => a[sort].localeCompare(b[sort]))
@@ -35,9 +35,9 @@ const Dictionary = () => {
 
 	const myWords = sortedWords(words, sort)
 
-	const handleAddWord = () => {
+	const handleAddWord = (newWord) => {
 		setAddWordModalActive(false)
-		fetchWords()
+		setWords([...words, newWord])
 	}
 
 	const handleRemoveWord = (id) => {
@@ -45,7 +45,6 @@ const Dictionary = () => {
 	}
 
 	const handleRemoveWords = () => {
-		localStorage.removeItem('words')
 		setWords([])
 	}
 
