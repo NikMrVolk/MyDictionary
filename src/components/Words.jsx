@@ -1,3 +1,4 @@
+import MyLoader from './UI/loader/MyLoader'
 import Word from './Word'
 
 const Words = ({
@@ -10,7 +11,7 @@ const Words = ({
 	return (
 		<div>
 			{isWordsLoading ? (
-				<div>Words are loading...</div>
+				<MyLoader />
 			) : (
 				<>
 					{myWords.length ? (

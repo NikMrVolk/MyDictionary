@@ -1,0 +1,23 @@
+.loader__wrapper {
+	display: flex;
+	justify-content: center;
+	margin-top: 40px;
+}
+
+.loader__body {
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	border: 3px dashed black;
+	animation: rotate 1s infinite linear;
+	text-align: center;
+}
+
+@keyframes rotate {
+	from {
+		transform: rotate(0deg) scale(1);
+	}
+	to {
+		transform: rotate(360deg) scale(1.4);
+	}
+}
