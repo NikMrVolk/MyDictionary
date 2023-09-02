@@ -1,3 +1,4 @@
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import MyLoader from './UI/loader/MyLoader'
 import MyPagination from './UI/pagination/MyPagination'
 import Word from './Word'
@@ -16,38 +17,36 @@ const Words = ({
 	return (
 		<div>
 			{error && 'Eror: ' + error}
-			{isWordsLoading ? (
-				<MyLoader />
+			{isWordsLoading && <MyLoader />}
+			{myWords.length ? (
+				<>
+					<TransitionGroup>
+						{myWords.map((word) => (
+							<CSSTransition key={word.id} timeout={500} classNames="word">
+							<Word
+								{...word}
+								setModalActive={setModalActive}
+								setIdChangedWord={setIdChangedWord}
+								removeWord={removeWord}
+							/>
+							</CSSTransition>
+						))}
+					</TransitionGroup>
+				</>
 			) : (
 				<>
-					{myWords.length ? (
-						<>
-							{myWords.map((word) => (
-								<Word
-									key={word.id}
-									{...word}
-									setModalActive={setModalActive}
-									setIdChangedWord={setIdChangedWord}
-									removeWord={removeWord}
-								/>
-							))}
-							<MyPagination
-								pagesQty={pagesQty}
-								currentPage={page}
-								setPage={setPage}
-							/>
-						</>
-					) : (
-						<>
-							{!error && (
-								<div style={{ textAlign: 'center' }}>
-									You haven't words in your dictionary
-								</div>
-							)}
-						</>
+					{!error && !isWordsLoading && (
+						<div style={{ textAlign: 'center' }}>
+							You haven't words in your dictionary
+						</div>
 					)}
 				</>
 			)}
+			<MyPagination
+				pagesQty={pagesQty}
+				currentPage={page}
+				setPage={setPage}
+			/>
 		</div>
 	)
 }
