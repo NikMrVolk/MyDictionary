@@ -7,10 +7,6 @@ const SearchWords = ({ search, setSearch }) => {
 		{ value: 'body', name: 'Russian' },
 	]
 
-	const handleChangeSelect = (e) => {
-		setSearch({ ...search, sort: e.target.value })
-	}
-
 	return (
 		<>
 			<MySelect
@@ -18,7 +14,9 @@ const SearchWords = ({ search, setSearch }) => {
 				setSearch={setSearch}
 				defaultValue={'Sorted by'}
 				options={options}
-				changeSelect={handleChangeSelect}
+				onChange={(value) =>
+					setSearch({ ...search, sort: value })
+				}
 			/>
 			<MyInput
 				type="text"

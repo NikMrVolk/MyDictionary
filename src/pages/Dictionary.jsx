@@ -10,6 +10,7 @@ import { useWords } from '../hooks/useWords'
 import SearchWords from '../components/SearchWords'
 import { getArrWithFirstWords, getCountPage } from '../utils/utils'
 import { usePages } from '../hooks/usePages'
+import MySelect from '../components/UI/select/MySelect'
 
 const Dictionary = () => {
 	const [words, setWords] = useState([])
@@ -20,7 +21,7 @@ const Dictionary = () => {
 	const [search, setSearch] = useState({ sort: '', query: '' })
 	const [totalPages, setTotalPages] = useState('')
 	const [limit, setLimit] = useState('10')
-	const [page, setPage] = useState('1')
+	const [page, setPage] = useState(1)
 	const myWords = useWords(words, search.sort, search.query)
 	const pagesQty = usePages(totalPages)
 
@@ -55,7 +56,7 @@ const Dictionary = () => {
 
 	useEffect(() => {
 		fetchWords()
-	}, [page])
+	}, [page, limit])
 
 	return (
 		<>
@@ -68,6 +69,16 @@ const Dictionary = () => {
 				<br />
 				<SearchWords search={search} setSearch={setSearch} />
 				<br />
+				<MySelect
+					value={limit}
+					onChange={(value) => setLimit(value)}
+					defaultValue="Number of items"
+					options={[
+						{ value: 10, name: '10' },
+						{ value: 25, name: '25' },
+						{ value: -1, name: 'all' },
+					]}
+				/>
 				<Words
 					myWords={myWords}
 					isWordsLoading={isWordsLoading}

@@ -1,7 +1,7 @@
 import MyButton from './UI/button/MyButton'
 import { useNavigate } from 'react-router-dom'
 
-const WordsManager = ({setModalActive, removeWords}) => {
+const WordsManager = ({ setModalActive, removeWords }) => {
 	const navigate = useNavigate()
 
 	return (
@@ -14,7 +14,6 @@ const WordsManager = ({setModalActive, removeWords}) => {
 				Add word
 			</MyButton>
 			<MyButton
-				disabled
 				onClick={(e) => {
 					e.preventDefault()
 					removeWords()
@@ -23,7 +22,7 @@ const WordsManager = ({setModalActive, removeWords}) => {
 				Remove all words
 			</MyButton>
 			<MyButton
-			disabled
+				disabled
 				onClick={() => {
 					navigate('/game')
 				}}

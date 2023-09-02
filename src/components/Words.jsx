@@ -31,7 +31,11 @@ const Words = ({
 									removeWord={removeWord}
 								/>
 							))}
-							<MyPagination pagesQty={pagesQty} currentPage={page} setPage={setPage}/>
+							<MyPagination
+								pagesQty={pagesQty}
+								currentPage={page}
+								setPage={setPage}
+							/>
 						</>
 					) : (
 						<>

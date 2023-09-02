@@ -1,10 +1,8 @@
-const MySelect = ({ sort, changeSelect, defaultValue, options }) => {
+const MySelect = ({ sort, defaultValue, options, onChange }) => {
 	return (
 		<select
 			value={sort}
-			onChange={(e) => {
-				changeSelect(e)
-			}}
+			onChange={(event) => onChange(event.target.value)}
 		>
 			<option disabled value="">
 				{defaultValue}
